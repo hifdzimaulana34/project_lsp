@@ -8,6 +8,7 @@ class homeMenu extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Homepage LSP'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
@@ -25,7 +26,9 @@ class homeMenu extends StatelessWidget {
                   Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/pemasukan');
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                         ),
@@ -47,7 +50,9 @@ class homeMenu extends StatelessWidget {
                   Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/pengeluaran');
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                         ),
@@ -75,7 +80,9 @@ class homeMenu extends StatelessWidget {
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cashflow');
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                       ),

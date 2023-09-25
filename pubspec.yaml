@@ -68,6 +68,8 @@ flutter:
       - assets/button_image_3.png
       - assets/button_image_4.png
       - assets/hifdzi.png
+      - assets/pemasukan.png
+      - assets/pengeluaran.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

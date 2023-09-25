@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:proyek_lsp/cashFlow.dart';
 import 'package:proyek_lsp/homeMenu.dart';
+import 'package:proyek_lsp/pemasukan.dart';
 import 'package:proyek_lsp/pengaturan.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:proyek_lsp/database/databaseHelper.dart';
+import 'package:proyek_lsp/pengeluaran.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.insertTestUser();
+
+  // Debug print statement to verify that the database is initialized
+  print('Database initialized');
+
   runApp(MyApp());
 }
 
@@ -29,7 +34,11 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/homeMenu': (context) => const homeMenu(),
         '/pengaturan': (context) => PengaturanPage(),
+        '/pemasukan': (context) => TambahPemasukanPage(),
+        '/pengeluaran': (context) => TambahPengeluaranPage(),
+        '/cashflow': (context) => CashFlowPage(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

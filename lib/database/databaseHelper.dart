@@ -17,17 +17,29 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'my_database.db');
+    print('Database path: $path');
     return await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) {
+        print('Creating database tables...');
         db.execute('''
-          CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT,
-            password TEXT
-          )
-        ''');
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT,
+      password TEXT
+    )
+  ''');
+
+        db.execute('''
+    CREATE TABLE income (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      tanggal TEXT,
+      nominal REAL,
+      keterangan TEXT,
+      kategori TEXT
+    )
+  ''');
       },
     );
   }
@@ -68,5 +80,49 @@ class DatabaseHelper {
     } else {
       return null;
     }
+  }
+
+  Future<int> insertIncome(String tanggal, double nominal, String keterangan,
+      String kategori) async {
+    final db = await database;
+    final kategori = 'pemasukan';
+    return await db.insert(
+      'income',
+      {
+        'tanggal': tanggal,
+        'nominal': nominal,
+        'keterangan': keterangan,
+        'kategori': kategori,
+      },
+    );
+  }
+
+  Future<int> insertExpense(String tanggal, double nominal, String keterangan,
+      String kategori) async {
+    final db = await database;
+    final kategori = 'pengeluaran';
+    return await db.insert(
+      'income',
+      {
+        'tanggal': tanggal,
+        'nominal': nominal,
+        'keterangan': keterangan,
+        'kategori': kategori,
+      },
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getIncomeData() async {
+    final db = await database;
+    return await db.query('income');
+  }
+
+  Future<int> deleteIncome(int id) async {
+    final db = await database;
+    return await db.delete(
+      'income',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
