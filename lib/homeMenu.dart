@@ -13,81 +13,69 @@ class homeMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                ),
-                const Text('Rangkuman Bulan Ini'),
-                const Text('Pengeluaran: Rp. 500.000'),
-                const Text('Pemasukan: Rp. 1.500.000'),
-                SizedBox(
-                  height: 100,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add your function for the first button here
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero, // Remove default padding
-                          ),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/button_image_1.png'),
-                                fit: BoxFit.fill, // Fill the button completely
-                              ),
+            const Text('Rangkuman Bulan Ini'),
+            const Text('Pengeluaran: Rp. 500.000'),
+            const Text('Pemasukan: Rp. 1.500.000'),
+            SizedBox(height: 16.0),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        child: Container(
+                          width: 150,
+                          height: 150,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/button_image_1.png'),
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                        const Text('Tambah Pemasukan')
-                      ],
-                    ),
-                    SizedBox(width: 16.0), // Add spacing between buttons
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add your function for the second button here
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/button_image_2.png'),
-                                fit: BoxFit.fill,
-                              ),
+                      ),
+                      const Text('Tambah Pemasukan')
+                    ],
+                  ),
+                  SizedBox(width: 16.0),
+                  Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        child: Container(
+                          width: 150,
+                          height: 150,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/button_image_2.png'),
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                        const Text('Tambah Pengeluaran')
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                      ),
+                      const Text('Tambah Pengeluaran')
+                    ],
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 16.0), // Add spacing between rows
+            SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        // Add your function for the third button here
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                       ),
@@ -105,12 +93,12 @@ class homeMenu extends StatelessWidget {
                     const Text("Detail Cash Flow")
                   ],
                 ),
-                SizedBox(width: 16.0), // Add spacing between buttons
+                SizedBox(width: 16.0),
                 Column(
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // Add your function for the fourth button here
+                        Navigator.pushNamed(context, '/pengaturan');
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,

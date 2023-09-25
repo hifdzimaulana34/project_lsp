@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:proyek_lsp/homeMenu.dart';
+import 'package:proyek_lsp/pengaturan.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:proyek_lsp/database/databaseHelper.dart';
 
 void main() async {
-  runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.instance.insertTestUser();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +26,9 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
+        '/login': (context) => LoginPage(),
         '/homeMenu': (context) => const homeMenu(),
+        '/pengaturan': (context) => PengaturanPage(),
       },
     );
   }
@@ -33,24 +40,22 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({super.key});
 
-  void login(BuildContext context) {
-    // Authenticate the user and determine the user's access level
-    // Replace this with your own authentication logic
+  void login(BuildContext context) async {
     final String username = usernameController.text;
     final String password = passwordController.text;
 
-    // Here, you can replace the condition with your own logic to determine user access level
-    if (username == 'admin' && password == 'admin') {
+    final user = await DatabaseHelper.instance.getUser(username: username);
+
+    if (user != null && user['password'] == password) {
       Navigator.pushReplacementNamed(context, '/homeMenu');
     } else {
-      Navigator.pushReplacementNamed(context, '/userHome');
+      print('error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double containerSize =
-        MediaQuery.of(context).size.width * 0.4; // Adjust the size as needed
+    double containerSize = MediaQuery.of(context).size.width * 0.4;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,37 +67,30 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Centered Logo Image
             SizedBox(
               height: 100,
             ),
-
             Container(
               width: containerSize,
               height: containerSize,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/logo.png'), // Replace with your logo image path
+                  image: AssetImage('assets/logo.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             const SizedBox(height: 16.0),
-
-            // Centered Text for the Title
             const Center(
               child: Text(
                 'LSP Project',
                 style: TextStyle(
-                  fontSize: 24.0, // Adjust the font size as needed
-                  fontWeight:
-                      FontWeight.bold, // Adjust the font weight as needed
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-
             const SizedBox(height: 16.0),
             TextField(
               controller: usernameController,
