@@ -18,17 +18,17 @@ class PengaturanPage extends StatelessWidget {
 
       if (rowsUpdated > 0) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Password updated successfully')),
+          SnackBar(content: Text('Password berhasil diperbarui')),
         );
       } else {
         // Password update failed
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Password update failed')),
+          SnackBar(content: Text('Pembaruan password gagal')),
         );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Previous password is incorrect')),
+        SnackBar(content: Text('Password lama salah')),
       );
     }
   }

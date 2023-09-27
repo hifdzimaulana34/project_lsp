@@ -121,8 +121,7 @@ class _TambahPengeluaranPageState extends State<TambahPengeluaranPage> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content:
-                                Text('Please fill in all required fields')),
+                            content: Text('Tolong isi semua field yang ada')),
                       );
                     }
                   },

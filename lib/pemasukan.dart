@@ -116,13 +116,12 @@ class _TambahPemasukanPageState extends State<TambahPemasukanPage> {
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Income data saved successfully')),
+                            content: Text('Data Input Pemasukan Berhasil!')),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content:
-                                Text('Please fill in all required fields')),
+                            content: Text('Tolong isi semua field yang ada')),
                       );
                     }
                   },

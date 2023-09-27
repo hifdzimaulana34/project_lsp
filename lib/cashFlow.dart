@@ -64,8 +64,8 @@ class _CashFlowPageState extends State<CashFlowPage> {
                             child: ListTile(
                               title: Text(
                                 isPemasukan
-                                    ? '[+] Rp.$nominal'
-                                    : '[-] Rp.$nominal',
+                                    ? '[ + ] Rp.${nominal.toInt()}'
+                                    : '[ - ] Rp.${nominal.toInt()}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -89,7 +89,7 @@ class _CashFlowPageState extends State<CashFlowPage> {
                                     return AlertDialog(
                                       title: const Text('Delete Income'),
                                       content: const Text(
-                                          'Do you want to delete this income data?'),
+                                          'Apa anda ingin menghapus data tersebut?'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
