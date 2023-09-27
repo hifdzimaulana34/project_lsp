@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       home: LoginPage(),
       routes: {
         '/login': (context) => LoginPage(),
-        '/homeMenu': (context) => const homeMenu(),
+        '/homeMenu': (context) => const HomeMenu(),
         '/pengaturan': (context) => PengaturanPage(),
         '/pemasukan': (context) => TambahPemasukanPage(),
         '/pengeluaran': (context) => TambahPengeluaranPage(),

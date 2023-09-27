@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'database/databaseHelper.dart';
 
-class homeMenu extends StatelessWidget {
-  const homeMenu({super.key});
+class HomeMenu extends StatefulWidget {
+  const HomeMenu({Key? key}) : super(key: key);
+
+  @override
+  _HomeMenuState createState() => _HomeMenuState();
+}
+
+class _HomeMenuState extends State<HomeMenu> {
+  late List<Map<String, dynamic>> incomeData;
+
+  @override
+  void initState() {
+    super.initState();
+    loadIncomeData();
+  }
+
+  Future<void> loadIncomeData() async {
+    final data = await DatabaseHelper.instance.getIncomeData();
+    setState(() {
+      incomeData = data;
+    });
+  }
 
   double _calculateTotalAmount(
       List<Map<String, dynamic>> incomeData, String kategori) {
@@ -14,24 +35,29 @@ class homeMenu extends StatelessWidget {
         totalAmount += nominal;
       }
     }
-    return totalAmount;
+    return totalAmount.toInt().toDouble();
+  }
+
+  List<FlSpot> _getLineSpots(
+      List<Map<String, dynamic>> incomeData, String kategori) {
+    List<FlSpot> spots = [];
+    int day = 1;
+
+    for (final item in incomeData) {
+      final itemKategori = item['kategori'];
+      final nominal = item['nominal'];
+
+      if (itemKategori == kategori && nominal is double) {
+        spots.add(FlSpot(day.toDouble(), nominal));
+        day++;
+      }
+    }
+
+    return spots;
   }
 
   @override
   Widget build(BuildContext context) {
-    double _calculateTotalAmount(
-        List<Map<String, dynamic>> incomeData, String kategori) {
-      double totalAmount = 0;
-      for (final item in incomeData) {
-        final itemKategori = item['kategori'];
-        final nominal = item['nominal'];
-        if (itemKategori == kategori && nominal is double) {
-          totalAmount += nominal;
-        }
-      }
-      return totalAmount.toInt().toDouble();
-    }
-
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: DatabaseHelper.instance.getIncomeData(),
       builder: (context, snapshot) {
@@ -40,9 +66,11 @@ class homeMenu extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('Tidak ada data pemasukan.');
+          return Text('No income data available.');
         }
 
+        Color c1 = const Color(0xFFB71C1C);
+        Color c2 = const Color(0xFF4CAF50);
         final incomeData = snapshot.data!;
         final pengeluaranTotal =
             _calculateTotalAmount(incomeData, 'pengeluaran');
@@ -69,6 +97,38 @@ class homeMenu extends StatelessWidget {
                   style: TextStyle(color: Colors.green),
                 ),
                 SizedBox(height: 16.0),
+                Container(
+                  height: 150,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                  child: LineChart(
+                    LineChartData(
+                      gridData: FlGridData(show: true),
+                      titlesData: FlTitlesData(show: true),
+                      borderData: FlBorderData(show: true),
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: _getLineSpots(incomeData, 'pengeluaran'),
+                          isCurved: false,
+                          color: c1,
+                          belowBarData: BarAreaData(show: false),
+                        ),
+                        LineChartBarData(
+                          spots: _getLineSpots(incomeData, 'pemasukan'),
+                          isCurved: false,
+                          color: c2,
+                          belowBarData: BarAreaData(show: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -126,7 +186,7 @@ class homeMenu extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
